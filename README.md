@@ -7,6 +7,7 @@ Manage your chess leagues with this application. You can create leagues, registe
 ## RoadMap
 
 - [x] Create a league
+- [ ] View League
 - [ ] Register to league
 - [ ] Edit league (name, description, players)
 - [ ] Create a match
