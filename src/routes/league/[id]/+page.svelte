@@ -20,8 +20,8 @@
 		<Card.Title>{data.league?.name}</Card.Title>
 		<Card.Description>{data.league?.description}</Card.Description>
 	</Card.Header>
-	<Card.Content class="grid gap-6">
-		<section class="flex gap-6">
+	<Card.Content class="grid gap-8">
+		<section class="flex items-center gap-6">
 			<p class="flex gap-4">
 				<CalendarIcon />
 				<span>Starts: 11/11/11</span>
@@ -30,7 +30,7 @@
 				<UsersIcon />
 				<span>{players.length} players</span>
 			</p>
-			<p>Round 5</p>
+			<p class="rounded-md bg-secondary p-3">Round 5</p>
 		</section>
 		<section class="grid gap-6">
 			<h3 class="flex gap-4">
@@ -80,6 +80,6 @@
 		</section>
 	</Card.Content>
 	<Card.Footer>
-		<Button>Register</Button>
+		<Button class="mx-auto w-2/3 md:w-1/3">Register</Button>
 	</Card.Footer>
 </Card.Root>
