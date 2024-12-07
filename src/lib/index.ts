@@ -1,8 +1,8 @@
 
 import { dev } from "$app/environment";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "./server/db";
-import { user, league } from "./server/db/schema";
+import { user, league, leaguePlayer } from "./server/db/schema";
 
 export const createUser = async (username: string, lichessId: string, lichessAccessToken: string) => {
     return await db.insert(user).values({
@@ -28,6 +28,29 @@ export const createLeague = async (name: string, timeControl: string, isPublic: 
         creatorId,
         description
     }).returning()
+}
+
+export const registerToLeague = async (leagueId: string, userId: string) => {
+
+    const isRegistered = await isRegisteredToLeague(leagueId, userId);
+    if (isRegistered) return
+
+    const player = await db.insert(leaguePlayer).values({
+        id: crypto.randomUUID(),
+        leagueId,
+        userId
+    }).returning()
+
+    return player[0]
+
+}
+
+export const isRegisteredToLeague = async (leagueId: string, userId: string): Promise<boolean> => {
+    const leagueUser = await db.query.leaguePlayer.findFirst({
+        where: and(eq(leaguePlayer.userId, userId), eq(leaguePlayer.leagueId, leagueId)),
+    })
+
+    return leagueUser !== undefined
 }
 
 export const getLeagueById = async (id: string) => {

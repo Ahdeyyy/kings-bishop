@@ -5,6 +5,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { CalendarIcon, TrophyIcon, UsersIcon } from 'lucide-svelte';
 	import { Button } from '@/components/ui/button';
+	import { enhance } from '$app/forms';
 	let { data }: { data: PageData } = $props();
 	const players = [
 		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 },
@@ -72,7 +73,7 @@
 			</h3>
 			<ul class="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
 				{#each players as player}
-					<li class="rounded-md bg-secondary p-2">
+					<li class="rounded-md bg-secondary p-3">
 						<p>{player.name}</p>
 					</li>
 				{/each}
@@ -80,6 +81,14 @@
 		</section>
 	</Card.Content>
 	<Card.Footer>
-		<Button class="mx-auto w-2/3 md:w-1/3">Register</Button>
+		{#if data.isRegistered}
+			<div class="mx-auto">
+				<Button size="lg" variant="secondary" disabled>Registered</Button>
+			</div>
+		{:else}
+			<form method="POST" action="?/register" class="mx-auto" use:enhance>
+				<Button size="lg" formaction="?/register" type="submit">Register</Button>
+			</form>
+		{/if}
 	</Card.Footer>
 </Card.Root>
