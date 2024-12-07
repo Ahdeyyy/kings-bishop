@@ -29,6 +29,17 @@ export const league = sqliteTable('league', {
 	creatorId: text('creator_id').notNull().references(() => user.id)
 })
 
+export const leaguePlayers = sqliteTable('league_players', {
+	id: text('id').primaryKey(),
+	leagueId: text('league_id').notNull().references(() => league.id),
+	userId: text('user_id').notNull().references(() => user.id),
+	played: integer('played').default(0).notNull(),
+	won: integer('won').default(0).notNull(),
+	drawn: integer('drawn').default(0).notNull(),
+	lost: integer('lost').default(0).notNull(),
+	points: integer('points').default(0).notNull(),
+})
+
 export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;
 export type League = typeof league.$inferSelect;
