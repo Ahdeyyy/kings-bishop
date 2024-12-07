@@ -1,4 +1,5 @@
 
+import { relations } from 'drizzle-orm';
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
 export const user = sqliteTable('user', {
@@ -39,6 +40,13 @@ export const leaguePlayer = sqliteTable('league_player', {
 	lost: integer('lost').default(0).notNull(),
 	points: integer('points').default(0).notNull(),
 })
+
+export const leaguePlayerRelations = relations(leaguePlayer, ({ one }) => ({
+	user: one(user, {
+		fields: [leaguePlayer.userId],
+		references: [user.id]
+	})
+}))
 
 export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;

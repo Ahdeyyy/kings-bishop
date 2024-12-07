@@ -1,15 +1,17 @@
-import { getLeagueById, isRegisteredToLeague, registerToLeague } from '@/index';
+import { getLeagueById, getRegisteredPlayers, isRegisteredToLeague, registerToLeague } from '@/index';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load = (async ({ params, locals }) => {
     const { id } = params;
     const league = await getLeagueById(id) // await the promise in the ui
     const isRegistered = await isRegisteredToLeague(id, locals.user?.id || "")
+    const registeredPlayers = await getRegisteredPlayers(id)
 
     return {
         id,
         league,
-        isRegistered
+        isRegistered,
+        players: registeredPlayers
     };
 }) satisfies PageServerLoad;
 
@@ -24,8 +26,5 @@ export const actions = {
             console.error('player has already registered')
             return
         }
-
-        console.log('registered ' + register.userId)
-
     }
 } satisfies Actions

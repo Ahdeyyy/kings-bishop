@@ -45,6 +45,15 @@ export const registerToLeague = async (leagueId: string, userId: string) => {
 
 }
 
+export const getRegisteredPlayers = async (leagueId: string) => {
+    return await db.query.leaguePlayer.findMany({
+        where: eq(leaguePlayer.leagueId, leagueId),
+        with: {
+            user: true
+        }
+    })
+}
+
 export const isRegisteredToLeague = async (leagueId: string, userId: string): Promise<boolean> => {
     const leagueUser = await db.query.leaguePlayer.findFirst({
         where: and(eq(leaguePlayer.userId, userId), eq(leaguePlayer.leagueId, leagueId)),
