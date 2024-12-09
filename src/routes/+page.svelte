@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { Button } from '$lib/components/ui/button';
-	import Nav from '@/components/custom/Nav.svelte';
+	// import Nav from '@/components/custom/Nav.svelte';
 
 	const { data }: { data: PageData } = $props();
 </script>
@@ -15,7 +15,7 @@
 			Join or create a league to play chess with your friends
 		</p>
 	</div>
-	<div>
-		<Button href="/league/new">Create League</Button>
+	<div class="mx-auto">
+		<Button size="lg" href="/league/new">Create League</Button>
 	</div>
 </section>

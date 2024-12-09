@@ -1,4 +1,4 @@
-import { getLeagueById, getRegisteredPlayers, isRegisteredToLeague, registerToLeague } from '@/index';
+import { getLeagueById, getRegisteredPlayers, isRegisteredToLeague, registerToLeague, unregisterFromLeague } from '@/index';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load = (async ({ params, locals }) => {
@@ -26,5 +26,13 @@ export const actions = {
             console.error('player has already registered')
             return
         }
+    },
+    unregister: async ({ params, locals }) => {
+        console.log('unregistering player')
+        const leagueId = params.id;
+        const userId = locals.user?.id;
+        if (!userId) return
+        // await the promise in the ui
+        await unregisterFromLeague(leagueId, userId)
     }
 } satisfies Actions

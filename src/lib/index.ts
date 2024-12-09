@@ -45,6 +45,11 @@ export const registerToLeague = async (leagueId: string, userId: string) => {
 
 }
 
+export const unregisterFromLeague = async (leagueId: string, userId: string) => {
+    return await db.delete(leaguePlayer)
+        .where(and(eq(leaguePlayer.leagueId, leagueId), eq(leaguePlayer.userId, userId)))
+}
+
 export const getRegisteredPlayers = async (leagueId: string) => {
     return await db.query.leaguePlayer.findMany({
         where: eq(leaguePlayer.leagueId, leagueId),

@@ -76,8 +76,11 @@
 	</Card.Content>
 	<Card.Footer>
 		{#if data.isRegistered}
-			<div class="mx-auto">
+			<div class="mx-auto flex gap-6">
 				<Button size="lg" variant="secondary" disabled>Registered</Button>
+				<form action="?/unregister" method="post">
+					<Button size="lg" variant="destructive" type="submit">Unregister</Button>
+				</form>
 			</div>
 		{:else}
 			<form method="POST" action="?/register" class="mx-auto" use:enhance>
