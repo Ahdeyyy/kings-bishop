@@ -28,11 +28,11 @@ export const actions = {
         }
     },
     unregister: async ({ params, locals }) => {
-        console.log('unregistering player')
+
         const leagueId = params.id;
         const userId = locals.user?.id;
         if (!userId) return
-        // await the promise in the ui
+
         await unregisterFromLeague(leagueId, userId)
     }
 } satisfies Actions
