@@ -35,7 +35,7 @@
 	let dateContentRef = $state<HTMLElement | null>(null);
 </script>
 
-<Card.Root class="mx-auto w-full md:w-2/3">
+<Card.Root class="mx-auto w-full md:w-2/5">
 	<Card.Header>
 		<Card.Title>Create New League</Card.Title>
 		<Card.Description>Set up your league's details and preferences</Card.Description>
@@ -123,6 +123,8 @@
 		</form>
 	</Card.Content>
 	<Card.Footer class="flex justify-between">
-		<Button form="league-form" type="submit">Submit</Button>
+		<div class="mx-auto">
+			<Button size="lg" form="league-form" type="submit">Submit</Button>
+		</div>
 	</Card.Footer>
 </Card.Root>
