@@ -19,14 +19,15 @@ export const getUserByLichessId = async (lichessId: string) => {
     })
 }
 
-export const createLeague = async (name: string, timeControl: string, isPublic: boolean, description: string, creatorId: string) => {
+export const createLeague = async (name: string, timeControl: string, isPublic: boolean, description: string, creatorId: string, startDate: Date) => {
     return await db.insert(league).values({
         id: crypto.randomUUID(),
         name,
         timeControl,
         public: isPublic,
         creatorId,
-        description
+        description,
+        startDate
     }).returning()
 }
 
