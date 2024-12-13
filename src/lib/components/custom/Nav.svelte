@@ -9,7 +9,9 @@
 >
 	<ul class="flex items-center justify-between gap-12 rounded-md px-3 py-2 ring-1 ring-primary/20">
 		<li>
-			<Button href="/" variant="ghost">KB</Button>
+			<Button href="/" size="icon" variant="ghost">
+				<img src="/favicon.png" class="max-h-full max-w-full" alt="" srcset="" />
+			</Button>
 		</li>
 		<li>
 			<ul class="flex gap-6">
