@@ -27,7 +27,8 @@ export const league = sqliteTable('league', {
 	startDate: integer('start_date', { mode: 'timestamp' }),
 	variant: text('variant'),
 	timeControl: text('time_control'),
-	creatorId: text('creator_id').notNull().references(() => user.id)
+	creatorId: text('creator_id').notNull().references(() => user.id),
+	canRegister: integer('can_register', { mode: 'boolean' }).notNull().default(false).notNull(),
 })
 
 export const leaguePlayer = sqliteTable('league_player', {
