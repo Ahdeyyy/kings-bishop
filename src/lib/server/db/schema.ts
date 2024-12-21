@@ -29,6 +29,7 @@ export const league = sqliteTable('league', {
 	timeControl: text('time_control'),
 	creatorId: text('creator_id').notNull().references(() => user.id),
 	canRegister: integer('can_register', { mode: 'boolean' }).notNull().default(false).notNull(),
+	fixtureGenerated: integer('fixture_generated', { mode: 'boolean' }).default(false).notNull()
 })
 
 export const leaguePlayer = sqliteTable('league_player', {
@@ -40,6 +41,11 @@ export const leaguePlayer = sqliteTable('league_player', {
 	drawn: integer('drawn').default(0).notNull(),
 	lost: integer('lost').default(0).notNull(),
 	points: integer('points').default(0).notNull(),
+})
+
+export const leagueMatch = sqliteTable('league_match', {
+	id: text('id').primaryKey(),
+	whiteId: text('white_id').references(() => user.id).notNull()
 })
 
 export const leaguePlayerRelations = relations(leaguePlayer, ({ one }) => ({
