@@ -34,7 +34,7 @@ export const league = sqliteTable('league', {
 
 export const leaguePlayer = sqliteTable('league_player', {
 	id: text('id').primaryKey(),
-	leagueId: text('league_id').notNull().references(() => league.id),
+	leagueId: text('league_id').references(() => league.id).notNull(),
 	userId: text('user_id').notNull().references(() => user.id),
 	played: integer('played').default(0).notNull(),
 	won: integer('won').default(0).notNull(),
@@ -43,9 +43,17 @@ export const leaguePlayer = sqliteTable('league_player', {
 	points: integer('points').default(0).notNull(),
 })
 
-export const leagueMatch = sqliteTable('league_match', {
+export const leagueFixture = sqliteTable('league_fixture', {
 	id: text('id').primaryKey(),
-	whiteId: text('white_id').references(() => user.id).notNull()
+	leagueId: text('league_id').references(() => league.id).notNull(),
+	whiteId: text('white_id').references(() => user.id).notNull(),
+	blackId: text('black_id').references(() => user.id).notNull(),
+	matchUrl: text('match_url'),
+	date: integer('date', { mode: 'timestamp' }).notNull(),
+	//** w - white wins, t - tie, b - black wins */
+	result: text('result'),
+	lichessMatchId: text('lichess_match_id'),
+	round: integer('round'),
 })
 
 export const leaguePlayerRelations = relations(leaguePlayer, ({ one }) => ({
@@ -59,3 +67,4 @@ export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;
 export type League = typeof league.$inferSelect;
 export type LeaguePlayer = typeof leaguePlayer.$inferSelect;
+export type LeagueFixture = typeof leagueFixture.$inferSelect;
