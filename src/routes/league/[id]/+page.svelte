@@ -26,6 +26,9 @@
 				<span>{data.players.length} player(s)</span>
 			</p>
 			<!-- <p class="rounded-md bg-secondary p-3">Round 5</p> -->
+			{#if data.isOwner}
+				<Button href={`/league/${data.id}/admin`}>Edit</Button>
+			{/if}
 		</section>
 		<section class="grid gap-6">
 			<h3 class="flex gap-4">
