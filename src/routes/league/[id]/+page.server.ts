@@ -6,12 +6,14 @@ export const load = (async ({ params, locals }) => {
     const league = await getLeagueById(id) // await the promise in the ui
     const isRegistered = await isRegisteredToLeague(id, locals.user?.id || "")
     const registeredPlayers = await getRegisteredPlayers(id)
+    const isOwner = league?.creatorId === locals.user?.id
 
     return {
         id,
         league,
         isRegistered,
-        players: registeredPlayers
+        players: registeredPlayers,
+        isOwner
     };
 }) satisfies PageServerLoad;
 
