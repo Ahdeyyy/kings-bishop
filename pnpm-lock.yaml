@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/alfa-slab-one':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@libsql/client':
         specifier: ^0.9.0
         version: 0.9.0
@@ -580,6 +583,9 @@ packages:
 
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
+
+  '@fontsource/alfa-slab-one@5.1.0':
+    resolution: {integrity: sha512-T09ivi5TYl6wzLiZRQgGXxCIugjMG7jaw6RIfHwrEVdd5XLJGkjnZRIsI+3CDjJrIdIJGe1Wef6+FEKehJXI6g==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1664,7 +1670,6 @@ packages:
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
-    cpu: [x64, arm64, wasm32]
     os: [darwin, linux, win32]
 
   lilconfig@2.1.0:
@@ -2575,6 +2580,8 @@ snapshots:
       '@floating-ui/utils': 0.2.8
 
   '@floating-ui/utils@0.2.8': {}
+
+  '@fontsource/alfa-slab-one@5.1.0': {}
 
   '@humanfs/core@0.19.1': {}
 
