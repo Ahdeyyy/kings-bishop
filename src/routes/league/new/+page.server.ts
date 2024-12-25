@@ -20,6 +20,8 @@ export const actions = {
         const isPublic = form.get('public') === 'on';
         const timeControl = form.get('time-control')?.toString() || '';
         const description = form.get('description')?.toString() || '';
+        const startDate = form.get('start-date')?.toString() || '';
+
 
         if (name === '' || timeControl === '') {
             // toast.error('Name and time control are required');
@@ -29,7 +31,7 @@ export const actions = {
             }
         }
 
-        const league = await createLeague(name, timeControl, isPublic, description, locals.user.id)
+        const league = await createLeague(name, timeControl, isPublic, description, locals.user.id, new Date(startDate));
 
         return redirect(302, `/league/${league[0].id}`);
     }

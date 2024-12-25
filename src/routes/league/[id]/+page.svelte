@@ -5,14 +5,9 @@
 	import * as Card from '$lib/components/ui/card';
 	import { CalendarIcon, TrophyIcon, UsersIcon } from 'lucide-svelte';
 	import { Button } from '@/components/ui/button';
+	import { enhance } from '$app/forms';
 	let { data }: { data: PageData } = $props();
-	const players = [
-		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 },
-		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 },
-		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 },
-		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 },
-		{ name: 'rando', played: 5, wins: 3, draws: 1, losses: 1, points: 3.5 }
-	];
+	const startDate = data.league?.startDate?.toLocaleDateString();
 </script>
 
 <Card.Root class="mx-auto w-full md:w-2/3 ">
@@ -24,13 +19,16 @@
 		<section class="flex items-center gap-6">
 			<p class="flex gap-4">
 				<CalendarIcon />
-				<span>Starts: 11/11/11</span>
+				<span>Starts: {startDate}</span>
 			</p>
 			<p class="flex gap-4">
 				<UsersIcon />
-				<span>{players.length} players</span>
+				<span>{data.players.length} player(s)</span>
 			</p>
-			<p class="rounded-md bg-secondary p-3">Round 5</p>
+			<!-- <p class="rounded-md bg-secondary p-3">Round 5</p> -->
+			{#if data.isOwner}
+				<Button href={`/league/${data.id}/admin`}>Edit</Button>
+			{/if}
 		</section>
 		<section class="grid gap-6">
 			<h3 class="flex gap-4">
@@ -51,14 +49,14 @@
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{#each players as player, idx}
+					{#each data.players as player, idx}
 						<Table.Row>
 							<Table.Cell>{idx + 1}</Table.Cell>
-							<Table.Cell class="font-medium">{player.name}</Table.Cell>
+							<Table.Cell class="font-medium">{player.user.username}</Table.Cell>
 							<Table.Cell>{player.played}</Table.Cell>
-							<Table.Cell>{player.wins}</Table.Cell>
-							<Table.Cell>{player.draws}</Table.Cell>
-							<Table.Cell>{player.losses}</Table.Cell>
+							<Table.Cell>{player.won}</Table.Cell>
+							<Table.Cell>{player.drawn}</Table.Cell>
+							<Table.Cell>{player.lost}</Table.Cell>
 							<Table.Cell class="text-right">{player.points}</Table.Cell>
 						</Table.Row>
 					{/each}
@@ -71,15 +69,26 @@
 				<span> Registered players </span>
 			</h3>
 			<ul class="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-				{#each players as player}
-					<li class="rounded-md bg-secondary p-2">
-						<p>{player.name}</p>
+				{#each data.players as player}
+					<li class="rounded-md bg-secondary p-3">
+						<p>{player.user.username}</p>
 					</li>
 				{/each}
 			</ul>
 		</section>
 	</Card.Content>
 	<Card.Footer>
-		<Button class="mx-auto w-2/3 md:w-1/3">Register</Button>
+		{#if data.isRegistered}
+			<div class="mx-auto flex gap-6">
+				<Button size="lg" variant="secondary" disabled>Registered</Button>
+				<form action="?/unregister" method="post">
+					<Button size="lg" variant="destructive" type="submit">Unregister</Button>
+				</form>
+			</div>
+		{:else}
+			<form method="POST" action="?/register" class="mx-auto" use:enhance>
+				<Button size="lg" formaction="?/register" type="submit">Register</Button>
+			</form>
+		{/if}
 	</Card.Footer>
 </Card.Root>

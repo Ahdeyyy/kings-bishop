@@ -8,6 +8,16 @@
 	import * as Select from '$lib/components/ui/select';
 	import { toast } from 'svelte-sonner';
 	import { Textarea } from '@/components/ui/textarea';
+	import CalendarIcon from 'lucide-svelte/icons/calendar';
+	import { DateFormatter, type DateValue, getLocalTimeZone } from '@internationalized/date';
+	import { cn } from '$lib/utils.js';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
+	import { Calendar } from '$lib/components/ui/calendar/index.js';
+	import * as Popover from '$lib/components/ui/popover/index.js';
+
+	const df = new DateFormatter('en-US', {
+		dateStyle: 'long'
+	});
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let isPublic = $state(false);
@@ -20,9 +30,12 @@
 				description: form?.message || "We couldn't create the league"
 			});
 	}
+
+	let dateValue = $state<DateValue | undefined>();
+	let dateContentRef = $state<HTMLElement | null>(null);
 </script>
 
-<Card.Root class="mx-auto w-full md:w-2/3">
+<Card.Root class="mx-auto w-full md:w-2/5">
 	<Card.Header>
 		<Card.Title>Create New League</Card.Title>
 		<Card.Description>Set up your league's details and preferences</Card.Description>
@@ -37,21 +50,21 @@
 		>
 			<fieldset>
 				<label>
-					<span>League Name</span>
+					<span class="mb-2">League Name</span>
 					<Input name="name" placeholder="Enter league name" type="text" />
 				</label>
 			</fieldset>
 
 			<fieldset>
 				<label>
-					<span>League Description</span>
+					<span class="mb-2">League Description</span>
 					<Textarea name="description" placeholder="Enter league description" />
 				</label>
 			</fieldset>
 
 			<fieldset>
 				<label>
-					<p class="flex gap-4">
+					<p class="mb-2 flex items-center gap-4">
 						<ClockIcon size={20} />
 						<span> Time control </span>
 					</p>
@@ -75,6 +88,32 @@
 			{/if}
 
 			<fieldset>
+				<input type="date" name="start-date" bind:value={dateValue} hidden id="start-date" />
+				<label>
+					<p class="mb-2 flex items-center gap-4">
+						<CalendarIcon size={20} />
+						<span>Start Date</span>
+					</p>
+					<Popover.Root>
+						<Popover.Trigger
+							class={cn(
+								buttonVariants({
+									variant: 'outline',
+									class: 'w-[280px] justify-start text-left font-normal'
+								}),
+								!dateValue && 'text-muted-foreground'
+							)}
+						>
+							<CalendarIcon />
+							{dateValue ? df.format(dateValue.toDate(getLocalTimeZone())) : 'Pick a date'}
+						</Popover.Trigger>
+						<Popover.Content bind:ref={dateContentRef} class="w-auto p-0">
+							<Calendar type="single" bind:value={dateValue} />
+						</Popover.Content>
+					</Popover.Root>
+				</label>
+			</fieldset>
+			<fieldset>
 				<label class="flex items-center gap-4">
 					<UsersIcon size={20} />
 					<span>Public League</span>
@@ -84,6 +123,8 @@
 		</form>
 	</Card.Content>
 	<Card.Footer class="flex justify-between">
-		<Button form="league-form" type="submit">Submit</Button>
+		<div class="mx-auto">
+			<Button size="lg" form="league-form" type="submit">Submit</Button>
+		</div>
 	</Card.Footer>
 </Card.Root>
